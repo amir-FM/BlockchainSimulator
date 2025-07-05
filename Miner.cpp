@@ -5,11 +5,25 @@
 
 using namespace std;
 
-void Miner::mine_block(struct Block &b) {
+void Miner::hash_block(struct Block &b) {
 	unsigned char *data = (unsigned char *)&b;
-	unsigned char hash[64];
-	SHA256_Update(data, sizeof(Block), hash);
+	unsigned char hash[SHA256_DIGEST_LENGTH];
 
-	memcpy(b.hash, hash, 64);
+	memset(b.hash, 0, SHA256_DIGEST_LENGTH);
+	SHA256(data, sizeof(Block), hash);
+
+	memcpy(b.hash, hash, SHA256_DIGEST_LENGTH);
+}
+
+void Miner::mine_block(struct Block &b) {
+	b.pivot = 0;
+	do{
+		hash_block(b);
+		cout << "trying pivot: " << b.pivot << " with hash: ";
+		b.print_hash(b.hash);
+		b.pivot++;
+	}while(*(short *)b.hash != 0);
+
+	cout << "pivot is " << --b.pivot  << endl;
 }
 

@@ -1,21 +1,22 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <iostream>
+#include <openssl/sha.h>
 
 using namespace std;
 
 class Block {
+//private:
 public:
 	int timestamp;
 	char data[1000];
 	int pivot;
-	char prev_hash[64];
-	char hash[64];
+	char prev_hash[SHA256_DIGEST_LENGTH];
+	char hash[SHA256_DIGEST_LENGTH];
 
-	void print() {
-		cout << timestamp << "\n" << data << "\n" << pivot << "\n" << prev_hash << "\n" << hash << endl;
-	}
+	Block();
+	void print();
+	void print_hash(char *hash);
 };
 
 #endif

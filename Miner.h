@@ -8,6 +8,7 @@ class Miner {
 public:
 	Miner() {};
 	void mine_block(Block &b);
+	void hash_block(Block &b);
 };
 
 #endif
