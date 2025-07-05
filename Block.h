@@ -6,7 +6,6 @@
 using namespace std;
 
 class Block {
-//private:
 public:
 	int timestamp;
 	char data[1000];
