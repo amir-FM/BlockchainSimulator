@@ -5,15 +5,12 @@
 
 using namespace std;
 
-Miner::Miner() {
-	sign = 2;
-	srand(time(NULL));
-}
-
 Miner::Miner(int sign) {
 	this->sign = sign;
 	srand(time(NULL));
 }
+
+Miner::Miner() : Miner(3) {}
 
 void Miner::hash_block(struct Block &b) {
 	unsigned char *data = (unsigned char *)&b;

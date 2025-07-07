@@ -1,24 +1,20 @@
 #include <iostream>
 #include <cstring>
+#include <thread>
 #include "Miner.h"
 #include "Block.h"
 #include "Chain.h"
+#include "Miner_Race.h"
 
 using namespace std;
 
 int main() {
 	srand(time(NULL));
-	Miner m(4);
+	Miner m(2);
 	Chain c;
 	Block b;
+	Miner_Race mr(10);
 	b.add_data("salut");
-	m.mine_block(b);
+	mr.race(b);
 	b.print();
-
-	m.mine_block(b);
-	b.print();
-
-	m.mine_block(b);
-	b.print();
-
 }
