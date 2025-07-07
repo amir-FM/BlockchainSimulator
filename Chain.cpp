@@ -17,11 +17,11 @@ void Chain::add_block(Block b) {
 	struct Node *node = new_node(b);
 
 	if(head == NULL){
-		miner.mine_block(node->block);
+		miner.mine_block(node->block, 0);
 		head = tail = node;
 	}else{
 		memcpy(node->block.prev_hash, tail->block.hash, SHA256_DIGEST_LENGTH);
-		miner.mine_block(node->block);
+		miner.mine_block(node->block, 0);
 		tail->next = node;
 		tail = node;
 	}
@@ -32,6 +32,7 @@ void Chain::print_chain() {
 
 	while(p != NULL) {
 		p->block.print();
+		cout << endl;
 		p = p->next;
 	}
 }

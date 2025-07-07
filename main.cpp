@@ -7,17 +7,18 @@
 using namespace std;
 
 int main() {
-	Miner m;
+	srand(time(NULL));
+	Miner m(4);
 	Chain c;
 	Block b;
 	b.add_data("salut");
-	c.add_block(b);
-	c.print_chain();
-	cout << "-------------------------------\n";
-	b.add_data("ce mai faceti aici");
-	c.add_block(b);
-	c.print_chain();
-	
+	m.mine_block(b);
+	b.print();
 
+	m.mine_block(b);
+	b.print();
+
+	m.mine_block(b);
+	b.print();
 
 }

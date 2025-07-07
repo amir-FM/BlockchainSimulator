@@ -5,6 +5,16 @@
 
 using namespace std;
 
+Miner::Miner() {
+	sign = 2;
+	srand(time(NULL));
+}
+
+Miner::Miner(int sign) {
+	this->sign = sign;
+	srand(time(NULL));
+}
+
 void Miner::hash_block(struct Block &b) {
 	unsigned char *data = (unsigned char *)&b;
 	unsigned char hash[SHA256_DIGEST_LENGTH];
@@ -15,15 +25,28 @@ void Miner::hash_block(struct Block &b) {
 	memcpy(b.hash, hash, SHA256_DIGEST_LENGTH);
 }
 
-void Miner::mine_block(struct Block &b) {
-	b.pivot = 0;
+void Miner::mine_block(Block &b) {mine_block(b, rand() % INT_MAX);}
+
+void Miner::mine_block(struct Block &b, int start) {
+	b.pivot = start;
 	do{
 		hash_block(b);
-		cout << "trying pivot: " << b.pivot << " with hash: ";
-		b.print_hash(b.hash);
+		//cout << "trying pivot: " << b.pivot << " with hash: ";
+		//b.print_hash(b.hash);
 		b.pivot++;
-	}while(*(short *)b.hash != 0);
+	}while(!check_signed(b));
 
-	cout << "pivot is " << --b.pivot  << endl;
+	//cout << "pivot is " << --b.pivot  << endl;
 }
 
+bool Miner::check_signed(Block b) {
+	int count = sign;
+	char *p = b.hash;
+	while(count > 0){
+		if(*p != 0)
+			return false;
+		count--;
+		p += 1;
+	}
+	return true;
+}

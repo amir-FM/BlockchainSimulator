@@ -3,6 +3,8 @@
 
 #include <openssl/sha.h>
 #include <cstring>
+#include <iostream>
+#include <cstdlib>
 #include "Block.h"
 #include "Miner.h"
 
