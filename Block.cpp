@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <cstring>
 #include "Block.h"
 
 Block::Block() {
@@ -7,6 +5,11 @@ Block::Block() {
 	memset(data, 0, 1000);
 	memset(prev_hash, 0, SHA256_DIGEST_LENGTH);
 	memset(hash, 0, SHA256_DIGEST_LENGTH);
+}
+
+void Block::add_data(string str) {
+	timestamp = time(NULL);
+	strncpy(data, str.data(), 1000);
 }
 
 void Block::print_hash(char *hash) {
