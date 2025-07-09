@@ -19,6 +19,7 @@ class Block {
   char hash[SHA256_DIGEST_LENGTH];
 
   Block();
+  void add_data_with_time(string str);
   void add_data(string str);
   void print();
   void print_hash(char *hash);

@@ -2,7 +2,11 @@
 
 using namespace std;
 
-Chain::Chain() { head = tail = NULL; }
+Chain::Chain() {
+  head = tail = NULL;
+  size = 0;
+  miner = Miner(2);
+}
 
 Chain::Node *Chain::new_node(Block b) {
   struct Node *node = new struct Node;
@@ -17,20 +21,60 @@ void Chain::add_block(Block b) {
   if (head == NULL) {
     miner.mine_block(node->block, 0);
     head = tail = node;
+    node->prev = node->next = NULL;
+    node->block_index = 0;
   } else {
     memcpy(node->block.prev_hash, tail->block.hash, SHA256_DIGEST_LENGTH);
     miner.mine_block(node->block, 0);
+    node->block_index = tail->block_index + 1;
+    node->next = NULL;
+    node->prev = tail;
     tail->next = node;
     tail = node;
   }
+
+  size++;
 }
 
 void Chain::print_chain() {
   struct Node *p = head;
 
   while (p != NULL) {
+    cout << "#" << p->block_index << endl;
     p->block.print();
     cout << endl;
     p = p->next;
+  }
+}
+
+void Chain::edit_block(int index, string new_data) {
+  struct Node *node = get_block(index);
+  if (node == NULL) {
+    cerr << "Block not found by index\n";
+    return;
+  }
+
+  node->block.add_data(new_data);
+  update_blocks_from(node);
+}
+
+Chain::Node *Chain::get_block(int index) {
+  if (index >= size) return NULL;
+  struct Node *p = head;
+  while (p->block_index != index) {
+    p = p->next;
+  }
+
+  return p;
+}
+
+void Chain::update_blocks_from(struct Node *node) {
+  Miner m(2);
+  while (node != NULL) {
+    if (node != head)
+      memcpy(node->block.prev_hash, node->prev->block.hash,
+             SHA256_DIGEST_LENGTH);
+    m.hash_block(node->block);
+    node = node->next;
   }
 }

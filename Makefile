@@ -7,6 +7,6 @@ lint: *.cpp *.h
 clean:
 	-rm -rf exit
 
-push: lint
+push:
 	git push
 

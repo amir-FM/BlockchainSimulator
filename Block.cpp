@@ -7,10 +7,12 @@ Block::Block() {
   memset(hash, 0, SHA256_DIGEST_LENGTH);
 }
 
-void Block::add_data(string str) {
+void Block::add_data_with_time(string str) {
   timestamp = time(NULL);
   strncpy(data, str.data(), 1000);
 }
+
+void Block::add_data(string str) { strncpy(data, str.data(), 1000); }
 
 void Block::print_hash(char *hash) {
   for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) printf("%.2x", hash[i] & 0xFF);

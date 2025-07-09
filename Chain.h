@@ -14,9 +14,12 @@ using namespace std;
 
 class Chain {
  private:
+  int size;
+
   struct Node {
     struct Node *prev, *next;
     Block block;
+    int block_index;
   };
 
  public:
@@ -27,6 +30,9 @@ class Chain {
   struct Node *new_node(Block b);
   void add_block(Block b);
   void print_chain();
+  void edit_block(int index, string new_data);
+  struct Node *get_block(int index);
+  void update_blocks_from(struct Node *node);
 };
 
 #endif
