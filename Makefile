@@ -1,5 +1,5 @@
 all: *.cpp *.h
-	g++ *.cpp -o exit -lcrypto
+	g++ *.cpp -o exit -lcrypto -lncurses
 
 lint: *.cpp *.h
 	clang-format --style=Google *.cpp *.h -i
