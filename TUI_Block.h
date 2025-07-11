@@ -2,13 +2,14 @@
 #define TUI_BLOCK_H
 
 #include <ncurses.h>
+
 #include "Block.h"
 
 class TUI_Block {
-private:
+ private:
   WINDOW *win;
 
-public:
+ public:
   Block block;
   TUI_Block(Block block);
   void make_window();

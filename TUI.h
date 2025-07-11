@@ -4,9 +4,8 @@
 #include <ncurses.h>
 
 class TUI {
-private:
-  
-public:
+ private:
+ public:
   void
 };
 
