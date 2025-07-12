@@ -1,21 +1,20 @@
-#ifndef TUI_BLOCK_H
-#define TUI_BLOCK_H
+
+#ifndef TUI_CHAIN_H
+#define TUI_CHAIN_H
 
 #include <ncurses.h>
 
 #include "Block.h"
 
-class TUI_Block {
+class TUI_Chain {
  private:
-  int id;
   int start_x, start_y;
 
  public:
   WINDOW *win;
-  Block block;
-  TUI_Block(Block block, int start_x, int start_y, int id);
+  TUI_Chain(int start_y, int start_x);
   void make_window();
-  void fill_window();
+  void draw_block(Block block, int start_y, int start_x);
   void refresh_window();
   void print_hash(WINDOW *win, char *hash);
 };

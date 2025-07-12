@@ -9,6 +9,7 @@
 #include "Miner.h"
 #include "Miner_Race.h"
 #include "TUI_Block.h"
+#include "TUI_Chain.h"
 
 using namespace std;
 
@@ -37,24 +38,23 @@ int main() {
   initscr();
 
   Block b;
+  TUI_Chain tc(3, 3);
   b.add_data_with_time("hello");
-  TUI_Block tb1(b);
-  tb1.make_window();
-  tb1.fill_window();
-  refresh();
+  tc.make_window();
+  tc.draw_block(b, 0, 0);
+  tc.draw_block(b, 7, 0);
+  tc.draw_block(b, 14, 0);
+  tc.draw_block(b, 21, 0);
+  tc.draw_block(b, 28, 0);
+  tc.draw_block(b, 35, 0);
+  tc.draw_block(b, 42, 0);
+  tc.draw_block(b, 49, 0);
+  tc.draw_block(b, 56, 0);
 
-  tb1.refresh_window();
+  refresh();
+  tc.refresh_window();
 
   int c = getch();
-
-  Miner m(2);
-  m.mine_block(tb1.block);
-  tb1.fill_window();
-  refresh();
-
-  tb1.refresh_window();
-
-  c = getch();
 
   endwin();
 }
