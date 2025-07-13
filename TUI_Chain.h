@@ -5,18 +5,24 @@
 #include <ncurses.h>
 
 #include "Block.h"
+#include "Chain.h"
 
 class TUI_Chain {
  private:
   int start_x, start_y;
+  Chain *chain;
+  int page;
 
  public:
   WINDOW *win;
-  TUI_Chain(int start_y, int start_x);
+  TUI_Chain(Chain *chain, int start_y, int start_x);
   void make_window();
   void draw_block(Block block, int start_y, int start_x);
   void refresh_window();
   void print_hash(WINDOW *win, char *hash);
+  void draw_chain();
+  void next_page();
+  void prev_page();
 };
 
 #endif

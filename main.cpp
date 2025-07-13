@@ -38,23 +38,45 @@ int main() {
   initscr();
 
   Block b;
-  TUI_Chain tc(3, 3);
+  Chain c;
+  TUI_Chain tc(&c, 3, 3);
   b.add_data_with_time("hello");
+  c.add_block(b);
   tc.make_window();
-  tc.draw_block(b, 0, 0);
-  tc.draw_block(b, 7, 0);
-  tc.draw_block(b, 14, 0);
-  tc.draw_block(b, 21, 0);
-  tc.draw_block(b, 28, 0);
-  tc.draw_block(b, 35, 0);
-  tc.draw_block(b, 42, 0);
-  tc.draw_block(b, 49, 0);
-  tc.draw_block(b, 56, 0);
+  tc.draw_chain();
 
   refresh();
   tc.refresh_window();
 
-  int c = getch();
+  int ch = getch();
+
+  b.add_data_with_time("salutare");
+  c.add_block(b);
+  c.add_block(b);
+  c.add_block(b);
+  c.add_block(b);
+  c.add_block(b);
+  c.add_block(b);
+  tc.draw_chain();
+
+  refresh();
+  tc.refresh_window();
+
+  while (ch = getch()) {
+    if (ch == '1') {
+      tc.next_page();
+      wclear(tc.win);
+      tc.draw_chain();
+      refresh();
+      tc.refresh_window();
+    } else if (ch == '2') {
+      tc.prev_page();
+      wclear(tc.win);
+      tc.draw_chain();
+      refresh();
+      tc.refresh_window();
+    }
+  }
 
   endwin();
 }

@@ -14,8 +14,6 @@ using namespace std;
 
 class Chain {
  private:
-  int size;
-
   struct Node {
     struct Node *prev, *next;
     Block block;
@@ -23,6 +21,7 @@ class Chain {
   };
 
  public:
+  int size;
   struct Node *head, *tail;
   Miner miner;
 
@@ -33,6 +32,7 @@ class Chain {
   void edit_block(int index, string new_data);
   struct Node *get_block(int index);
   void update_blocks_from(struct Node *node);
+  Block *block_iterator(int start);
 };
 
 #endif

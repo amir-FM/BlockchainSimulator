@@ -78,3 +78,15 @@ void Chain::update_blocks_from(struct Node *node) {
     node = node->next;
   }
 }
+
+Block *Chain::block_iterator(int start) {
+  static struct Node *p;
+  if (start >= 0)
+    p = get_block(start);
+  else if (p == NULL)
+    return NULL;
+
+  Block *res = &(p->block);
+  p = p->next;
+  return res;
+}
