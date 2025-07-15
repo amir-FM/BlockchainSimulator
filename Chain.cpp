@@ -69,12 +69,11 @@ Chain::Node *Chain::get_block(int index) {
 }
 
 void Chain::update_blocks_from(struct Node *node) {
-  Miner m(2);
   while (node != NULL) {
     if (node != head)
       memcpy(node->block.prev_hash, node->prev->block.hash,
              SHA256_DIGEST_LENGTH);
-    m.hash_block(node->block);
+    miner.hash_block(node->block);
     node = node->next;
   }
 }
@@ -89,4 +88,20 @@ Block *Chain::block_iterator(int start) {
   Block *res = &(p->block);
   p = p->next;
   return res;
+}
+
+void Chain::remine_blocks_from(int index) {
+  struct Node *node = get_block(index);
+  if (node == NULL) {
+    cerr << "Block not found\n";
+    return;
+  }
+
+  while (node != NULL) {
+    if (node != head)
+      memcpy(node->block.prev_hash, node->prev->block.hash,
+             SHA256_DIGEST_LENGTH);
+    miner.mine_block(node->block);
+    node = node->next;
+  }
 }

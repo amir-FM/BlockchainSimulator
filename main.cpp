@@ -1,11 +1,12 @@
 #include <ncurses.h>
 
-#include <cstring>
 #include <iostream>
+#include <string>
 #include <thread>
 
 #include "Block.h"
 #include "Chain.h"
+#include "Input_Field.h"
 #include "Miner.h"
 #include "Miner_Race.h"
 #include "TUI_Block.h"
@@ -36,17 +37,21 @@ using namespace std;
 //
 int main() {
   initscr();
+  noecho();
 
   Block b;
   Chain c;
   TUI_Chain tc(&c, 3, 3);
+  Input_Field inpf(3, 100);
   b.add_data_with_time("hello");
   c.add_block(b);
   tc.make_window();
   tc.draw_chain();
+  inpf.make_window();
 
   refresh();
   tc.refresh_window();
+  inpf.clear_window();
 
   int ch = getch();
 
@@ -66,16 +71,22 @@ int main() {
     if (ch == '1') {
       tc.next_page();
       wclear(tc.win);
-      tc.draw_chain();
-      refresh();
-      tc.refresh_window();
     } else if (ch == '2') {
       tc.prev_page();
       wclear(tc.win);
-      tc.draw_chain();
-      refresh();
-      tc.refresh_window();
+    } else if (ch == 'i') {
+      b.add_data_with_time(inpf.get_input("Input data for block"));
+      c.add_block(b);
+    } else if (ch == 'e') {
+      c.edit_block(stoi(inpf.get_input("Input number")),
+                   inpf.get_input("Input new data"));
+    } else if (ch == 'r') {
+      c.remine_blocks_from(stoi(inpf.get_input("Input index")));
     }
+
+    tc.draw_chain();
+    refresh();
+    tc.refresh_window();
   }
 
   endwin();

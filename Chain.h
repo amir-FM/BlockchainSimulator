@@ -32,6 +32,7 @@ class Chain {
   void edit_block(int index, string new_data);
   struct Node *get_block(int index);
   void update_blocks_from(struct Node *node);
+  void remine_blocks_from(int index);
   Block *block_iterator(int start);
 };
 

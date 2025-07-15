@@ -7,9 +7,11 @@ TUI_Chain::TUI_Chain(Chain *chain, int start_y, int start_x) {
   this->page = 0;
 }
 
-void TUI_Chain::make_window() { win = newwin(50, 79, start_y, start_x); }
+void TUI_Chain::make_window() { win = newwin(43, 79, start_y, start_x); }
 
-void TUI_Chain::draw_block(Block block, int start_y, int start_x) {
+void TUI_Chain::draw_block(Block block, int start_y, int start_x,
+                           int last_block, int id) {
+  mvwprintw(win, start_y, start_x + 74, "#%d", id);
   mvwprintw(win, start_y, start_x + 2, "Timestamp: %d", block.timestamp);
   mvwprintw(win, start_y + 1, start_x + 2, "Nonce:     %d", block.pivot);
   mvwprintw(win, start_y + 2, start_x + 2, "Data:      %s", block.data);
@@ -17,8 +19,10 @@ void TUI_Chain::draw_block(Block block, int start_y, int start_x) {
   print_hash(win, block.prev_hash);
   mvwprintw(win, start_y + 4, start_x + 2, "Hash:      ");
   print_hash(win, block.hash);
-  wmove(win, start_y + 5, 1);
-  whline(win, ACS_HLINE, 77);
+  if (last_block) {
+    wmove(win, start_y + 5, 1);
+    whline(win, ACS_HLINE, 77);
+  }
 }
 
 void TUI_Chain::refresh_window() { wrefresh(win); }
@@ -29,19 +33,24 @@ void TUI_Chain::print_hash(WINDOW *win, char *hash) {
 }
 
 void TUI_Chain::draw_chain() {
+  wclear(win);
   box(win, 0, 0);
   Block *p = chain->block_iterator(page * 6);
   int index = 2;
   int no_pages = 6;
+  int id = page * 6;
   while (p != NULL && no_pages--) {
-    draw_block(*p, index, 0);
+    draw_block(*p, index, 0, no_pages, id++);
+
     index += 7;
     p = chain->block_iterator(-1);
   }
+
+  mvwprintw(win, 42, 72, "%d/%d", page, (chain->size - 1) / 6);
 }
 
 void TUI_Chain::next_page() {
-  if (page < chain->size / 6) page++;
+  if (page < (chain->size - 1) / 6) page++;
 }
 void TUI_Chain::prev_page() {
   if (page > 0) page--;
