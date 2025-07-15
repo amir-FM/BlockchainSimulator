@@ -105,3 +105,20 @@ void Chain::remine_blocks_from(int index) {
     node = node->next;
   }
 }
+
+void Chain::remine_block(int index) {
+  struct Node *node = get_block(index);
+  if (node == NULL) {
+    cerr << "Block not found\n";
+    return;
+  }
+
+  miner.mine_block(node->block);
+  node = node->next;
+
+  while (node != NULL) {
+    memcpy(node->block.prev_hash, node->prev->block.hash, SHA256_DIGEST_LENGTH);
+    miner.hash_block(node->block);
+    node = node->next;
+  }
+}

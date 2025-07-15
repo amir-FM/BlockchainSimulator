@@ -80,8 +80,10 @@ int main() {
     } else if (ch == 'e') {
       c.edit_block(stoi(inpf.get_input("Input number")),
                    inpf.get_input("Input new data"));
-    } else if (ch == 'r') {
+    } else if (ch == 'R') {
       c.remine_blocks_from(stoi(inpf.get_input("Input index")));
+    } else if (ch == 'r') {
+      c.remine_block(stoi(inpf.get_input("Input index")));
     }
 
     tc.draw_chain();
