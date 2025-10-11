@@ -78,7 +78,7 @@ int main() {
       b.add_data_with_time(inpf.get_input("Input data for block"));
       c.add_block(b);
     } else if (ch == 'e') {
-      c.edit_block(stoi(inpf.get_input("Input number")),
+      c.edit_block(stoi(inpf.get_input("Input index")),
                    inpf.get_input("Input new data"));
     } else if (ch == 'R') {
       c.remine_blocks_from(stoi(inpf.get_input("Input index")));

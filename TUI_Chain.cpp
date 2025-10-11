@@ -18,6 +18,7 @@ void TUI_Chain::draw_block(Block block, int start_y, int start_x,
   mvwprintw(win, start_y + 3, start_x + 2, "Prev Hash: ");
   print_hash(win, block.prev_hash);
   mvwprintw(win, start_y + 4, start_x + 2, "Hash:      ");
+  // add color here
   print_hash(win, block.hash);
   if (last_block) {
     wmove(win, start_y + 5, 1);

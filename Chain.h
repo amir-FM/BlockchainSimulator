@@ -9,6 +9,7 @@
 
 #include "Block.h"
 #include "Miner.h"
+#include "Miner_Race.h"
 
 using namespace std;
 
@@ -24,6 +25,8 @@ class Chain {
   int size;
   struct Node *head, *tail;
   Miner miner;
+  Miner_Race mr;
+  bool mine_race;
 
   Chain();
   struct Node *new_node(Block b);
@@ -35,6 +38,7 @@ class Chain {
   void remine_blocks_from(int index);
   void remine_block(int index);
   Block *block_iterator(int start);
+  void mine_controller(Block &b);
 };
 
 #endif
