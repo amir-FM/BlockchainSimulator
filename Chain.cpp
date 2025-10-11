@@ -6,7 +6,7 @@ Chain::Chain() {
   head = tail = NULL;
   size = 0;
   miner = Miner(2);
-  mr = Miner_Race();
+  mr = Miner_Race(4, 3);
   mine_race = true;
 }
 
@@ -17,17 +17,18 @@ Chain::Node *Chain::new_node(Block b) {
   return node;
 }
 
-void Chain::add_block(Block b) {
+int Chain::add_block(Block b) {
   struct Node *node = new_node(b);
+  int miner_won;
 
   if (head == NULL) {
-    mine_controller(node->block);
+    miner_won = mine_controller(node->block);
     head = tail = node;
     node->prev = node->next = NULL;
     node->block_index = 0;
   } else {
     memcpy(node->block.prev_hash, tail->block.hash, SHA256_DIGEST_LENGTH);
-    mine_controller(node->block);
+    miner_won = mine_controller(node->block);
     node->block_index = tail->block_index + 1;
     node->next = NULL;
     node->prev = tail;
@@ -36,6 +37,8 @@ void Chain::add_block(Block b) {
   }
 
   size++;
+
+  return miner_won;
 }
 
 void Chain::print_chain() {
@@ -125,9 +128,11 @@ void Chain::remine_block(int index) {
   }
 }
 
-void Chain::mine_controller(Block &b) {
+int Chain::mine_controller(Block &b) {
   if(mine_race)
-    mr.race(b);
-  else
-    miner.mine_block(b);
+    return mr.race(b);
+
+  miner.mine_block(b);
+  return -1;
+  
 }

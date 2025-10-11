@@ -43,7 +43,8 @@ int main() {
   Chain c;
   TUI_Chain tc(&c, 3, 3);
   Input_Field inpf(3, 100);
-  b.add_data_with_time("hello");
+
+  b.add_data_with_time("Hello World!");
   c.add_block(b);
   tc.make_window();
   tc.draw_chain();
@@ -53,21 +54,7 @@ int main() {
   tc.refresh_window();
   inpf.clear_window();
 
-  int ch = getch();
-
-  b.add_data_with_time("salutare");
-  c.add_block(b);
-  c.add_block(b);
-  c.add_block(b);
-  c.add_block(b);
-  c.add_block(b);
-  c.add_block(b);
-  tc.draw_chain();
-
-  refresh();
-  tc.refresh_window();
-
-  while (ch = getch()) {
+  while (int ch = getch()) {
     if (ch == '1') {
       tc.next_page();
       wclear(tc.win);
@@ -76,7 +63,9 @@ int main() {
       wclear(tc.win);
     } else if (ch == 'i') {
       b.add_data_with_time(inpf.get_input("Input data for block"));
-      c.add_block(b);
+      inpf.print_log("Miners running");
+      int res = c.add_block(b);
+      inpf.print_log("Miner " + to_string(res) + " won");
     } else if (ch == 'e') {
       c.edit_block(stoi(inpf.get_input("Input index")),
                    inpf.get_input("Input new data"));

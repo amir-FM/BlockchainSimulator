@@ -30,7 +30,7 @@ class Chain {
 
   Chain();
   struct Node *new_node(Block b);
-  void add_block(Block b);
+  int add_block(Block b);
   void print_chain();
   void edit_block(int index, string new_data);
   struct Node *get_block(int index);
@@ -38,7 +38,7 @@ class Chain {
   void remine_blocks_from(int index);
   void remine_block(int index);
   Block *block_iterator(int start);
-  void mine_controller(Block &b);
+  int mine_controller(Block &b);
 };
 
 #endif

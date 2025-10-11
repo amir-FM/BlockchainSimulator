@@ -45,3 +45,10 @@ string Input_Field::get_input(string placeholder) {
 
   return input;
 }
+
+void Input_Field::print_log(string log) {
+  clear_window();
+  mvwprintw(win, 1, 1, log.data());
+  refresh();
+  wrefresh(win);
+}

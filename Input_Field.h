@@ -16,6 +16,7 @@ class Input_Field {
   void make_window();
   void clear_window();
   string get_input(string placeholder);
+  void print_log(string log);
 };
 
 #endif
