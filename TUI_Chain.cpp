@@ -1,10 +1,11 @@
 #include "TUI_Chain.h"
 
-TUI_Chain::TUI_Chain(Chain *chain, int start_y, int start_x) {
+TUI_Chain::TUI_Chain(Chain *chain, int start_y, int start_x, int sign_len) {
   this->chain = chain;
   this->start_y = start_y;
   this->start_x = start_x;
   this->page = 0;
+  this->sign_len = sign_len;
 }
 
 void TUI_Chain::make_window() { win = newwin(43, 79, start_y, start_x); }
@@ -18,8 +19,13 @@ void TUI_Chain::draw_block(Block block, int start_y, int start_x,
   mvwprintw(win, start_y + 3, start_x + 2, "Prev Hash: ");
   print_hash(win, block.prev_hash);
   mvwprintw(win, start_y + 4, start_x + 2, "Hash:      ");
-  // add color here
-  print_hash(win, block.hash);
+
+  if(!check_hash(block.hash)) {
+    wattron(win, COLOR_PAIR(1));
+    print_hash(win, block.hash);
+    wattroff(win, COLOR_PAIR(1));
+  }else print_hash(win, block.hash);
+
   if (last_block) {
     wmove(win, start_y + 5, 1);
     whline(win, ACS_HLINE, 77);
@@ -57,4 +63,12 @@ void TUI_Chain::next_page() {
 }
 void TUI_Chain::prev_page() {
   if (page > 0) page--;
+}
+
+bool TUI_Chain::check_hash(char *hash) {
+  for(int i = 0; i < sign_len && i < SHA256_DIGEST_LENGTH; i++)
+    if(hash[i] != 0)
+      return false;
+
+  return true;
 }

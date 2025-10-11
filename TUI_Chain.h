@@ -12,9 +12,10 @@ class TUI_Chain {
   int start_x, start_y;
   Chain *chain;
   int page;
+  int sign_len;
 
   WINDOW *win;
-  TUI_Chain(Chain *chain, int start_y, int start_x);
+  TUI_Chain(Chain *chain, int start_y, int start_x, int sign_len);
   void make_window();
   void draw_block(Block block, int start_y, int start_x, int last_block,
                   int id);
@@ -23,6 +24,7 @@ class TUI_Chain {
   void draw_chain();
   void next_page();
   void prev_page();
+  bool check_hash(char *hash);
 };
 
 #endif

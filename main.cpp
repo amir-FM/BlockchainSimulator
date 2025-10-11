@@ -16,14 +16,18 @@
 using namespace std;
 
 int main() {
-  int miners = 4;
-  int sign_len = 2;
+  int miners = 8;
+  int sign_len = 3;
   initscr();
   noecho();
+  start_color();
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_WHITE, COLOR_BLACK);
 
   Block b;
   Chain c(miners, sign_len);
-  TUI_Chain tc(&c, 3, 3);
+  TUI_Chain tc(&c, 3, 3, sign_len);
   Input_Field inpf(46, 3);
   TUI_Stats stats(3, 82, miners, sign_len);
 
@@ -44,7 +48,9 @@ int main() {
   inpf.clear_window();
 
   while (int ch = getch()) {
-    if (ch == '1') {
+    if(ch == 'q') {
+      break;
+    } else if (ch == '1') {
       tc.next_page();
       wclear(tc.win);
     } else if (ch == '2') {

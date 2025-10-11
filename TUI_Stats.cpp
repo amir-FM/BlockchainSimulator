@@ -18,9 +18,9 @@ void TUI_Stats::draw_stats() {
   mvwprintw(win, y++, 2, "1 / 2 - Page Up / Page Down");
   mvwprintw(win, y++, 2, "i - New Block");
   mvwprintw(win, y++, 2, "e - Edit Block");
-  mvwprintw(win, y++, 2, "e - Edit Block");
   mvwprintw(win, y++, 2, "r - Remine Block");
   mvwprintw(win, y++, 2, "R - Remine Blocks from Index");
+  mvwprintw(win, y++, 2, "q - Exit");
 
   // draw line;
   y++;
