@@ -11,30 +11,10 @@
 #include "Miner_Race.h"
 #include "TUI_Block.h"
 #include "TUI_Chain.h"
+#include "TUI_Stats.h"
 
 using namespace std;
 
-// int main() {
-//   srand(time(NULL));
-//   Miner m;
-//   Chain c;
-//   Block b;
-//   Miner_Race mr(10);
-//   b.add_data_with_time("salut");
-//   c.add_block(b);
-//
-//   b.add_data_with_time("ce mai faci");
-//   c.add_block(b);
-//
-//   b.add_data_with_time("eu bine tu");
-//   c.add_block(b);
-//
-//   c.print_chain();
-//
-//   c.edit_block(1, "sa nu te mai vad");
-//   c.print_chain();
-// }
-//
 int main() {
   initscr();
   noecho();
@@ -43,12 +23,24 @@ int main() {
   Chain c;
   TUI_Chain tc(&c, 3, 3);
   Input_Field inpf(3, 100);
+  Input_Field inpf2(6, 100);
+  TUI_Stats stats(6, 100, 4, 3);
+
+  stats.make_window();
+  refresh();
+  stats.draw_stats();
+  //stats.refresh_window();
+
+  int ch = getch();
 
   b.add_data_with_time("Hello World!");
   c.add_block(b);
   tc.make_window();
   tc.draw_chain();
   inpf.make_window();
+  inpf2.make_window();
+  //inpf2.clear_window();
+
 
   refresh();
   tc.refresh_window();

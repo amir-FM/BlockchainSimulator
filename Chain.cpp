@@ -6,7 +6,7 @@ Chain::Chain() {
   head = tail = NULL;
   size = 0;
   miner = Miner(2);
-  mr = Miner_Race(4, 3);
+  mr = Miner_Race(4, 2);
   mine_race = true;
 }
 

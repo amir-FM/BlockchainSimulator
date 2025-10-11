@@ -36,6 +36,8 @@ void TUI_Chain::print_hash(WINDOW *win, char *hash) {
 void TUI_Chain::draw_chain() {
   wclear(win);
   box(win, 0, 0);
+  mvwprintw(win, 0, 2, "Ledger");
+
   Block *p = chain->block_iterator(page * 6);
   int index = 2;
   int no_pages = 6;
