@@ -2,12 +2,26 @@
 
 using namespace std;
 
+Chain::Chain(int miners, int sign_len) {
+  head = tail = NULL;
+  size = 0;
+  miner = Miner(sign_len);
+  mr = Miner_Race(miners, sign_len);
+  mine_race = true;
+}
+
+Chain::Chain(int sign_len) {
+  head = tail = NULL;
+  size = 0;
+  miner = Miner(sign_len);
+  mine_race = false;
+}
+
 Chain::Chain() {
   head = tail = NULL;
   size = 0;
   miner = Miner(2);
-  mr = Miner_Race(4, 2);
-  mine_race = true;
+  mine_race = false;
 }
 
 Chain::Node *Chain::new_node(Block b) {

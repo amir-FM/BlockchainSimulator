@@ -5,6 +5,7 @@ void Input_Field::make_window() { win = newwin(3, size, start_y, start_x); }
 void Input_Field::clear_window() {
   wclear(win);
   box(win, 0, 0);
+  mvwprintw(win, 0, 41, "Console");
   wrefresh(win);
 }
 

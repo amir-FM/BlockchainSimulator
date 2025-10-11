@@ -29,6 +29,8 @@ class Chain {
   bool mine_race;
 
   Chain();
+  Chain(int sign_len);
+  Chain(int miners, int sign_len);
   struct Node *new_node(Block b);
   int add_block(Block b);
   void print_chain();

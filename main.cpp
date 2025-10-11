@@ -16,30 +16,27 @@
 using namespace std;
 
 int main() {
+  int miners = 4;
+  int sign_len = 2;
   initscr();
   noecho();
 
   Block b;
-  Chain c;
+  Chain c(miners, sign_len);
   TUI_Chain tc(&c, 3, 3);
-  Input_Field inpf(3, 100);
-  Input_Field inpf2(6, 100);
-  TUI_Stats stats(6, 100, 4, 3);
+  Input_Field inpf(46, 3);
+  TUI_Stats stats(3, 82, miners, sign_len);
 
+  inpf.make_window();
+  tc.make_window();
   stats.make_window();
   refresh();
-  stats.draw_stats();
-  //stats.refresh_window();
 
-  int ch = getch();
 
   b.add_data_with_time("Hello World!");
   c.add_block(b);
-  tc.make_window();
   tc.draw_chain();
-  inpf.make_window();
-  inpf2.make_window();
-  //inpf2.clear_window();
+  stats.draw_stats();
 
 
   refresh();
