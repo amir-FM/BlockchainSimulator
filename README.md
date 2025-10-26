@@ -1,6 +1,6 @@
 # BlockchainSimulator
 
-Blockchain Simulator made in C++ with **ncurses* GUI.
+Blockchain Simulator made in C++ with **ncurses** GUI.
 
 ## Description
 
